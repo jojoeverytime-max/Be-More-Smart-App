@@ -4,16 +4,19 @@ import { Assignment } from "../models/Assignment.js";
 import { createAssignmentSchema, updateAssignmentSchema } from "../validation.js";
 
 export const assignmentsRouter = Router();
+const COMPLETION_REWARD_POINTS = 10;
 
 function serialize(assignment) {
   return {
     id: assignment._id.toString(),
     title: assignment.title,
     className: assignment.className,
+    activityName: assignment.activityName ?? "",
     dueDate: assignment.dueDate,
     priority: assignment.priority,
     completed: assignment.completed,
     completedAt: assignment.completedAt?.toISOString() ?? null,
+    rewardPoints: assignment.rewardPoints ?? 0,
     createdAt: assignment.createdAt.toISOString(),
   };
 }
@@ -39,14 +42,33 @@ assignmentsRouter.patch("/:id", async (request, response) => {
     return response.status(404).json({ error: "Assignment not found." });
   }
   const input = updateAssignmentSchema.parse(request.body);
-  const update = { ...input };
-  if (input.completed === true) update.completedAt = new Date();
-  if (input.completed === false) update.completedAt = null;
-  const assignment = await Assignment.findOneAndUpdate(
-    { _id: request.params.id, ownerId: request.auth.payload.sub },
-    { $set: update },
-    { new: true, runValidators: true },
-  );
+  const assignmentFilter = { _id: request.params.id, ownerId: request.auth.payload.sub };
+  let assignment;
+
+  if (input.completed === true) {
+    const completedAt = new Date();
+    assignment = await Assignment.findOneAndUpdate(
+      { ...assignmentFilter, completed: { $ne: true } },
+      { $set: { ...input, completedAt, rewardPoints: COMPLETION_REWARD_POINTS } },
+      { new: true, runValidators: true },
+    );
+
+    if (!assignment) {
+      assignment = await Assignment.findOneAndUpdate(
+        assignmentFilter,
+        { $set: { ...input, completedAt } },
+        { new: true, runValidators: true },
+      );
+    }
+  } else {
+    const update = { ...input };
+    if (input.completed === false) update.completedAt = null;
+    assignment = await Assignment.findOneAndUpdate(
+      assignmentFilter,
+      { $set: update },
+      { new: true, runValidators: true },
+    );
+  }
   if (!assignment) return response.status(404).json({ error: "Assignment not found." });
   return response.json(serialize(assignment));
 });

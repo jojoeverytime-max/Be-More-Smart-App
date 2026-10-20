@@ -3,9 +3,19 @@ import express from "express";
 import { auth } from "express-oauth2-jwt-bearer";
 import helmet from "helmet";
 import mongoose from "mongoose";
+import { existsSync } from "node:fs";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import { ZodError } from "zod";
+import { activitiesRouter } from "./routes/activities.js";
 import { assignmentsRouter } from "./routes/assignments.js";
+import { budgetRouter } from "./routes/budget.js";
 import { classesRouter } from "./routes/classes.js";
+import { messagesRouter } from "./routes/messages.js";
+import { profileRouter } from "./routes/profile.js";
+
+const clientDirectory = resolve(dirname(fileURLToPath(import.meta.url)), "../dist");
+const clientEntry = resolve(clientDirectory, "index.html");
 
 export function createApp(config) {
   const app = express();
@@ -34,7 +44,27 @@ export function createApp(config) {
   });
 
   app.use("/api/assignments", authenticate, assignmentsRouter);
+  app.use("/api/activities", authenticate, activitiesRouter);
+  app.use("/api/budget", authenticate, budgetRouter);
   app.use("/api/classes", authenticate, classesRouter);
+  app.use("/api/messages", authenticate, messagesRouter);
+  app.use("/api/profile", authenticate, profileRouter);
+
+  if (existsSync(clientEntry)) {
+    app.use(express.static(clientDirectory));
+    app.get("/{*path}", (request, response, next) => {
+      if (request.path.startsWith("/api/")) return next();
+      return response.sendFile(clientEntry);
+    });
+  } else {
+    app.get("/", (_request, response) => {
+      response.json({ message: "Be More Smart on Study Day API is running. Run npm run build to serve the web app." });
+    });
+  }
+
+  app.use("/api", (_request, response) => {
+    response.status(404).json({ error: "API route not found." });
+  });
 
   app.use((error, _request, response, _next) => {
     if (error instanceof ZodError) {
@@ -44,7 +74,7 @@ export function createApp(config) {
       });
     }
     if (error?.code === 11000) {
-      return response.status(409).json({ error: "That class already exists." });
+      return response.status(409).json({ error: "A record with that value already exists." });
     }
     if (error?.statusCode === 401 || error?.statusCode === 403) {
       return response.status(error.statusCode).json({ error: "A valid Auth0 access token is required." });

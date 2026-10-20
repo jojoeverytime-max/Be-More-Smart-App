@@ -13,12 +13,16 @@ const {
   AUTH0_AUDIENCE,
 } = import.meta.env;
 
+function configuredValue(...values) {
+  return values.find((value) => value?.trim() && !/^your[-_]/i.test(value.trim()));
+}
+
 const authConfig = {
-  domain: VITE_AUTH0_DOMAIN || AUTH0_DOMAIN,
-  clientId: VITE_AUTH0_CLIENT_ID || AUTH0_CLIENT_ID,
-  audience: VITE_AUTH0_AUDIENCE || AUTH0_AUDIENCE,
+  domain: configuredValue(VITE_AUTH0_DOMAIN, AUTH0_DOMAIN),
+  clientId: configuredValue(VITE_AUTH0_CLIENT_ID, AUTH0_CLIENT_ID),
+  audience: configuredValue(VITE_AUTH0_AUDIENCE, AUTH0_AUDIENCE),
 };
-const authConfigured = Boolean(authConfig.domain && authConfig.clientId && authConfig.audience);
+const authConfigured = Object.values(authConfig).every(Boolean);
 
 function Root() {
   if (!authConfigured) return <App authConfigured={false} />;

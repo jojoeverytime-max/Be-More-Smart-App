@@ -11,6 +11,10 @@ export function getServerConfig() {
   return {
     port: Number(process.env.PORT || 3001),
     mongoUri: required("MONGODB_URI"),
+    mongoDnsServers: (process.env.MONGODB_DNS_SERVERS || "")
+      .split(",")
+      .map((server) => server.trim())
+      .filter(Boolean),
     auth0Domain,
     auth0Audience: required("AUTH0_AUDIENCE"),
     clientOrigins: (process.env.CLIENT_ORIGIN || "http://localhost:5173")
