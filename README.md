@@ -50,7 +50,9 @@ Open the Vite URL shown in the terminal (normally `http://localhost:5173`). The 
 
 To run only the React frontend, use `npm run web`. To run only the API, use `npm run dev:server` during development. In production, `npm start` builds the frontend and serves it alongside the API.
 
-To open the development app on a phone connected to the same Wi-Fi, run `npm run mobile` and open `http://<computer-LAN-IP>:5173` on the phone. Find the computer's LAN IP with `ipconfig` on Windows. Set that exact origin (for example, `http://192.168.1.20:5173`) in `CLIENT_ORIGIN` in `.env` and add it to the Auth0 SPA's allowed callback, logout, and web origins. If prompted, allow Node.js through the computer's private-network firewall. The regular `npm run dev` command remains local-only.
+To test sign-in on a phone connected to the same Wi-Fi, run `npm run mobile` and open the Network URL printed by Vite (for example, `http://192.168.1.20:5173`). Add that exact URL to the Auth0 SPA's Allowed Callback URLs, Allowed Logout URLs, and Allowed Web Origins. If prompted, allow Node.js through the computer's private-network firewall. The Vite proxy forwards the API requests to the local server, so no LAN address is needed in `CLIENT_ORIGIN` for this development setup. The regular `npm run dev` command remains local-only.
+
+For users to sign in from phones on any network, deploy the app at a public HTTPS address. Add that exact production origin to the Auth0 SPA's Allowed Callback URLs, Allowed Logout URLs, and Allowed Web Origins, and set `CLIENT_ORIGIN` to it on the API server. A LAN development URL is only reachable while the phone and computer are on the same network; it is not public hosting. The Auth0 dashboard and hosting provider must be configured for your own app and domain before users can access it.
 
 If MongoDB Atlas SRV lookups fail with a DNS error, set `MONGODB_DNS_SERVERS` to a reachable DNS resolver (for example, `1.1.1.1` or `8.8.8.8`).
 

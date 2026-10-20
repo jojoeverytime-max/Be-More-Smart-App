@@ -927,7 +927,7 @@ function Dashboard({ user, getAccessTokenSilently, onLogout }) {
     <>
       <IconLibrary />
       <div className="app-shell">
-        <aside className={`sidebar ${mobileMenuOpen ? "mobile-open" : ""}`}>
+        <aside id="main-sidebar" className={`sidebar ${mobileMenuOpen ? "mobile-open" : ""}`}>
           <a className="brand" href="#" aria-label="Be More Smart on Study Day home"><span className="brand-mark"><Icon name="cap" /></span><span className="brand-name">Be More Smart<br />on Study Day</span></a>
           <div className="side-label">WORKSPACE</div>
           <nav className="primary-nav" aria-label="Main navigation">
@@ -1045,7 +1045,14 @@ function Dashboard({ user, getAccessTokenSilently, onLogout }) {
                   </section>
                 )}
               </div>
-              <button className="mobile-menu" onClick={() => setMobileMenuOpen((open) => !open)} aria-label="Open menu"><span /><span /><span /></button>
+              <button
+                className="mobile-menu"
+                type="button"
+                onClick={() => setMobileMenuOpen((open) => !open)}
+                aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+                aria-expanded={mobileMenuOpen}
+                aria-controls="main-sidebar"
+              ><span /><span /><span /></button>
             </div>
           </header>
 

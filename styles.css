@@ -373,7 +373,7 @@ h2 { margin-bottom: 4px; font: 700 15px "Manrope",sans-serif; letter-spacing: -.
 .toast.show { opacity: 1; transform: translateY(0); }
 .button:disabled { cursor: wait; opacity: .65; transform: none; }
 .api-error { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: -7px 0 18px; padding: 11px 14px; border: 1px solid #f3d8d2; border-radius: 9px; color: #9a5c50; background: #fff7f5; font-size: 11px; }
-.auth-loading, .setup-screen, .login-screen { display: grid; min-height: 100vh; place-items: center; padding: 24px; }
+.auth-loading, .setup-screen, .login-screen { display: grid; min-height: 100vh; min-height: 100svh; place-items: center; padding: 24px; }
 .auth-loading { display: flex; justify-content: center; gap: 11px; color: #77788b; background: radial-gradient(ellipse at 12% 8%, #fff0f4 0, transparent 40%), radial-gradient(ellipse at 92% 20%, #fff4c8 0, transparent 38%), var(--page-background); font-size: 12px; }
 .loading-spinner { width: 17px; height: 17px; border: 2px solid #dedaf7; border-top-color: #7869dc; border-radius: 50%; animation: spin .75s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
@@ -391,7 +391,7 @@ h2 { margin-bottom: 4px; font: 700 15px "Manrope",sans-serif; letter-spacing: -.
 .login-card h1 { margin: 10px 0 13px; font-size: 34px; }
 .login-card > p { margin-bottom: 24px; }
 .login-card > .auth-error { margin: 0 0 18px; padding: 11px 13px; border: 1px solid #f3d8d2; border-radius: 9px; color: #9a5c50; background: #fff7f5; font-size: 11px; line-height: 1.6; }
-.login-button { width: 100%; min-height: 46px; font-size: 12px; }
+.login-button { width: 100%; min-height: 48px; font-size: 12px; }
 .login-button svg { width: 15px; height: 15px; }
 .login-footnote { display: block; margin-top: 15px; color: #a4a4b1; font-size: 10px; text-align: center; }
 .login-decoration { position: absolute; right: max(5vw,32px); bottom: 48px; display: grid; justify-items: center; gap: 5px; color: #8d82c8; font: 500 11px "Manrope",sans-serif; }
@@ -418,8 +418,11 @@ h2 { margin-bottom: 4px; font: 700 15px "Manrope",sans-serif; letter-spacing: -.
   .sidebar.mobile-open .brand { margin: 0 0 34px 7px; }.sidebar.mobile-open .brand > span:not(.brand-mark), .sidebar.mobile-open .side-label, .sidebar.mobile-open .nav-link > span:not(.nav-count), .sidebar.mobile-open .class-link, .sidebar.mobile-open .focus-card, .sidebar.mobile-open .profile-info, .sidebar.mobile-open .profile-more { display: flex; }
   .sidebar.mobile-open .class-row { display: flex; }.sidebar.mobile-open .class-delete { opacity: 1; }
   .sidebar.mobile-open .brand > span:not(.brand-mark) { display: inline; }.sidebar.mobile-open .side-label { display: flex; }.sidebar.mobile-open .nav-link { justify-content: flex-start; width: 100%; padding: 0 12px; }.sidebar.mobile-open .nav-link > span.nav-count { display: inline; }.sidebar.mobile-open .class-list { margin-top: 0; }.sidebar.mobile-open .profile { justify-content: flex-start; }
-  .main-content { margin-left: 0; }.topbar { height: 60px; padding: 0 17px; }.breadcrumb { font-size: 11px; }.top-actions { gap: 8px; }.search-box { width: min(42vw,190px); height: 34px; }.search-box kbd { display: none; }.notification-button { display: none; }
-  .mobile-menu { display: flex; width: 33px; height: 33px; flex-direction: column; align-items: center; justify-content: center; gap: 4px; border: 0; border-radius: 8px; background: transparent; cursor: pointer; }.mobile-menu span { width: 16px; height: 1.5px; border-radius: 2px; background: #77788a; }
+  .main-content { margin-left: 0; }.topbar { height: 60px; gap: 8px; padding: 0 12px; }.breadcrumb { min-width: 0; flex: 1; font-size: 11px; }.breadcrumb strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }.top-actions { flex: 0 0 auto; gap: 6px; }.search-box { width: min(42vw,190px); min-width: 0; height: 44px; }.search-box kbd { display: none; }.notification-button { display: none; }
+  .mobile-menu { display: flex; width: 44px; height: 44px; flex: 0 0 44px; flex-direction: column; align-items: center; justify-content: center; gap: 4px; border: 0; border-radius: 8px; background: transparent; cursor: pointer; }.mobile-menu span { width: 16px; height: 1.5px; border-radius: 2px; background: #77788a; }
+  .login-screen, .setup-screen { padding: max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) max(16px,env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left)); }
+  .login-card, .setup-card { padding: clamp(22px,7vw,33px); border-radius: 14px; }
+  .login-brand { margin-bottom: 30px; }.login-card h1 { font-size: clamp(29px,9vw,34px); }.login-button { min-height: 52px; font-size: 14px; }.login-footnote { font-size: 12px; }.login-decoration { display: none; }
   .page-content { padding: 26px 17px 20px; }.welcome-row { align-items: flex-start; gap: 10px; }.welcome-row .button { min-height: 36px; padding: 0 10px; font-size: 0; }.welcome-row .button svg { width: 17px; height: 17px; }.eyebrow { font-size: 9px; }h1 { font-size: 21px; }.welcome-subtitle { max-width: 260px; font-size: 10px; line-height: 1.5; }
   .public-chat-messages { min-height: 250px; padding: 10px; }.chat-bubble { max-width: 92%; }.chat-composer { gap: 5px; padding: 7px; }.chat-composer .button { padding: 0 9px; }
   .overview-grid { gap: 8px; margin-bottom: 17px; }.stat-card { min-height: 116px; padding: 11px 10px 10px; border-radius: 10px; }.stat-top { margin-bottom: 8px; }.stat-icon { width: 25px; height: 25px; }.stat-icon svg { width: 14px; height: 14px; }.stat-note { max-width: 60px; padding: 4px 5px; font-size: 7px; text-align: center; }.stat-number { font-size: 22px; }.stat-label { font-size: 9px; }.stat-foot { font-size: 8px; }

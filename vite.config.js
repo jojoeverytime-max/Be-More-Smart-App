@@ -6,7 +6,14 @@ export default defineConfig({
   envPrefix: ["VITE_", "AUTH0_"],
   server: {
     proxy: {
-      "/api": "http://localhost:3001",
+      "/api": {
+        target: "http://localhost:3001",
+        configure(proxy) {
+          proxy.on("proxyReq", (proxyRequest) => {
+            proxyRequest.removeHeader("origin");
+          });
+        },
+      },
     },
   },
 });
