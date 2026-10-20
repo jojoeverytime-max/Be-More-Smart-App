@@ -50,6 +50,8 @@ Open the Vite URL shown in the terminal (normally `http://localhost:5173`). The 
 
 To run only the React frontend, use `npm run web`. To run only the API, use `npm run dev:server` during development. In production, `npm start` builds the frontend and serves it alongside the API.
 
+To open the development app on a phone connected to the same Wi-Fi, run `npm run mobile` and open `http://<computer-LAN-IP>:5173` on the phone. Find the computer's LAN IP with `ipconfig` on Windows. Set that exact origin (for example, `http://192.168.1.20:5173`) in `CLIENT_ORIGIN` in `.env` and add it to the Auth0 SPA's allowed callback, logout, and web origins. If prompted, allow Node.js through the computer's private-network firewall. The regular `npm run dev` command remains local-only.
+
 If MongoDB Atlas SRV lookups fail with a DNS error, set `MONGODB_DNS_SERVERS` to a reachable DNS resolver (for example, `1.1.1.1` or `8.8.8.8`).
 
 ## API
