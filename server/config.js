@@ -8,6 +8,13 @@ function required(name) {
 
 export function getServerConfig() {
   const auth0Domain = required("AUTH0_DOMAIN").replace(/^https?:\/\//, "").replace(/\/+$/, "");
+  const clientOrigins = [
+    ...(process.env.CLIENT_ORIGIN || "http://localhost:5173")
+      .split(",")
+      .map((origin) => origin.trim())
+      .filter(Boolean),
+    ...(process.env.RENDER_EXTERNAL_URL ? [process.env.RENDER_EXTERNAL_URL.trim()] : []),
+  ];
   return {
     port: Number(process.env.PORT || 3001),
     mongoUri: required("MONGODB_URI"),
@@ -17,9 +24,6 @@ export function getServerConfig() {
       .filter(Boolean),
     auth0Domain,
     auth0Audience: required("AUTH0_AUDIENCE"),
-    clientOrigins: (process.env.CLIENT_ORIGIN || "http://localhost:5173")
-      .split(",")
-      .map((origin) => origin.trim())
-      .filter(Boolean),
+    clientOrigins: [...new Set(clientOrigins)],
   };
 }

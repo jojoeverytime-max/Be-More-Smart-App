@@ -52,7 +52,17 @@ To run only the React frontend, use `npm run web`. To run only the API, use `npm
 
 To test sign-in on a phone connected to the same Wi-Fi, run `npm run mobile` and open the Network URL printed by Vite (for example, `http://192.168.1.20:5173`). Add that exact URL to the Auth0 SPA's Allowed Callback URLs, Allowed Logout URLs, and Allowed Web Origins. If prompted, allow Node.js through the computer's private-network firewall. The Vite proxy forwards the API requests to the local server, so no LAN address is needed in `CLIENT_ORIGIN` for this development setup. The regular `npm run dev` command remains local-only.
 
-For users to sign in from phones on any network, deploy the app at a public HTTPS address. Add that exact production origin to the Auth0 SPA's Allowed Callback URLs, Allowed Logout URLs, and Allowed Web Origins, and set `CLIENT_ORIGIN` to it on the API server. A LAN development URL is only reachable while the phone and computer are on the same network; it is not public hosting. The Auth0 dashboard and hosting provider must be configured for your own app and domain before users can access it.
+### Deploy publicly on Render
+
+The repository includes a Render Blueprint in `render.yaml` for deploying the React app and API together at a public HTTPS address:
+
+1. Create a MongoDB Atlas database reachable by Render. Configure Atlas network access for the Render service's outbound IP addresses and have its MongoDB connection string ready.
+2. In the [Render Dashboard](https://dashboard.render.com), choose **New > Blueprint**, connect this GitHub repository, and select the branch to deploy.
+3. During setup, enter the requested Auth0 domain, SPA client ID, API audience, and MongoDB connection string. Use the same Auth0 domain and audience for both the `VITE_` and server variables. These values stay in Render's environment settings and are not committed to the repository.
+4. After Render deploys, copy the service's HTTPS URL (for example, `https://be-more-smart-app.onrender.com`) and add it to the Auth0 SPA's **Allowed Callback URLs**, **Allowed Logout URLs**, and **Allowed Web Origins**. If you change any `VITE_AUTH0_` environment variables in Render, trigger a new deploy so the frontend is rebuilt with those values.
+5. Open the HTTPS URL on a phone or computer from any network and sign in.
+
+The API automatically allows the public Render URL for same-origin requests. If you add a custom domain or host the frontend separately, set `CLIENT_ORIGIN` to the frontend's exact HTTPS origin in Render. Render's free web-service plan may spin down when idle, so the first visit after inactivity can take longer. A LAN development URL from `npm run mobile` is only reachable while the phone and computer are on the same network.
 
 If MongoDB Atlas SRV lookups fail with a DNS error, set `MONGODB_DNS_SERVERS` to a reachable DNS resolver (for example, `1.1.1.1` or `8.8.8.8`).
 
