@@ -30,6 +30,14 @@ test("health reports an unavailable database instead of claiming readiness", asy
   });
 });
 
+test("Content Security Policy allows connections to the configured Auth0 domain", async () => {
+  await withServer(async (baseUrl) => {
+    const response = await fetch(`${baseUrl}/api/health`);
+    const directives = response.headers.get("content-security-policy").split(";").map((directive) => directive.trim());
+    assert.ok(directives.includes("connect-src 'self' https://example.auth0.com"));
+  });
+});
+
 test("assignment routes reject requests without an Auth0 bearer token", async () => {
   await withServer(async (baseUrl) => {
     const response = await fetch(`${baseUrl}/api/assignments`);

@@ -26,7 +26,13 @@ export function createApp(config) {
   });
 
   app.disable("x-powered-by");
-  app.use(helmet());
+  app.use(helmet({
+    contentSecurityPolicy: {
+      directives: {
+        connectSrc: ["'self'", `https://${config.auth0Domain}`],
+      },
+    },
+  }));
   app.use(cors({
     origin(origin, callback) {
       if (!origin || config.clientOrigins.includes(origin)) return callback(null, true);
