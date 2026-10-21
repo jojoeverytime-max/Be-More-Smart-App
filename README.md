@@ -2,6 +2,8 @@
 
 Be More Smart on Study Day is a student assignment manager built with React, an Express REST API, MongoDB, and Auth0. Each student's assignments and classes are scoped to their verified Auth0 identity.
 
+**Live app:** [be-more-smart-app.onrender.com](https://be-more-smart-app.onrender.com)
+
 ## Requirements
 
 - Node.js 20.19+ (or 22.12+)
