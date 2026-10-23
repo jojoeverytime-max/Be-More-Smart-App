@@ -4,6 +4,10 @@ Be More Smart on Study Day is a student assignment manager built with React, an 
 
 **Live app:** [be-more-smart-app.onrender.com](https://be-more-smart-app.onrender.com)
 
+Scan to open the app:
+
+![QR code for Be More Smart on Study Day](./be-more-smart-app-qr.png)
+
 ## Requirements
 
 - Node.js 20.19+ (or 22.12+)
