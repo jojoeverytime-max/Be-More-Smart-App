@@ -4,13 +4,13 @@
 
 My Capstone project proposal was submitted and approved.
 
-I am currently working on building an App with  a basic fundamental requirement to let users sign up and be able to use the features. It is only the starting point, so I might have to play around with it, so the App can make more sense.
+I am currently working on building an App with a basic fundamental requirement to let users sign up and be able to use the features. It is only the starting point, so I might have to play around with it, so the App can make more sense.
 
 So far, everything seems to go well. I will keep updating my progress.
 
 ## October 13, 2026 — Making basic connections
 
-Weekkt update:
+Weekly update:
 1) What have you worked on?
 Able to do MongoDB connection, and Auth0 login. Organized sub folders and files in the project. Trouble shoot errors, and tested server run. Made the project more user friendly.
 
@@ -33,5 +33,6 @@ Focus on GitHub portion.
 No major blockers. Most of the issues are identifiable, and fixable.
 
 ## October 20, 2026 — Ready
-
 Submitted
+
+There was no major issues during the making of the project. Just had to spent a lot of time to do research, and look for answers to overcome several issues. I also learned a lot during this project making opportunity.
